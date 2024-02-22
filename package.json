@@ -10,17 +10,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lokyoung/vuejs-paginate.git"
+    "url": "git+https://github.com/uus-soft/vuejs-paginate.git"
   },
   "keywords": [
     "vue",
     "paginate",
     "pagination"
   ],
-  "author": "Cain Liu",
+  "author": "Cain Liu + Pavlo Harashchenko",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/lokyoung/vuejs-paginate/issues"
+    "url": "https://github.com/uus-soft/vuejs-paginate/issues"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",
