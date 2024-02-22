@@ -40,7 +40,7 @@
 export default {
   props: {
     value: {
-      type: Number
+      type: Number | Array
     },
     pageCount: {
       type: Number,
@@ -144,14 +144,25 @@ export default {
         this.innerValue = newValue
       }
     },
+    wrapSelected: () => {
+      return typeof this.selected === "object"
+        ? this.selected.pop()
+        : this.selected
+    },
+
+    // Todo: if loading more than 1 page, change a breakView
     pages: function () {
       let items = {}
       if (this.pageCount <= this.pageRange) {
         for (let index = 0; index < this.pageCount; index++) {
+          const isSelected = typeof this.selected === "object"
+            ? this.selected.includes(index)
+            : index === (this.selected - 1)
+
           let page = {
             index: index,
             content: index + 1,
-            selected: index === (this.selected - 1)
+            selected: isSelected
           }
           items[index] = page
         }
@@ -159,10 +170,14 @@ export default {
         const halfPageRange = Math.floor(this.pageRange / 2)
 
         let setPageItem = index => {
+          const isSelected = typeof this.selected === "object"
+            ? this.selected.includes(index)
+            : index === (this.selected - 1)
+
           let page = {
             index: index,
             content: index + 1,
-            selected: index === (this.selected - 1)
+            selected: isSelected
           }
 
           items[index] = page
@@ -184,8 +199,8 @@ export default {
 
         // 2nd - loop thru selected range
         let selectedRangeLow = 0;
-        if (this.selected - halfPageRange > 0) {
-          selectedRangeLow = this.selected - 1 - halfPageRange;
+        if (this.wrapSelected - halfPageRange > 0) {
+          selectedRangeLow = this.wrapSelected - 1 - halfPageRange;
         }
 
         let selectedRangeHigh = selectedRangeLow + this.pageRange - 1;
@@ -223,35 +238,39 @@ export default {
   },
   methods: {
     handlePageSelected(selected) {
-      if (this.selected === selected) return
+      if (typeof this.selected === "object" && this.selected.includes(selected)) {
+          return;
+      } else if (this.selected === selected)  {
+          return
+      }
 
       this.innerValue = selected
       this.$emit('input', selected)
       this.clickHandler(selected)
     },
     prevPage() {
-      if (this.selected <= 1) return
+      if (this.wrapSelected <= 1) return
 
-      this.handlePageSelected(this.selected - 1)
+      this.handlePageSelected(this.wrapSelected - 1)
     },
     nextPage() {
-      if (this.selected >= this.pageCount) return
+      if (this.wrapSelected >= this.pageCount) return
 
-      this.handlePageSelected(this.selected + 1)
+      this.handlePageSelected(this.wrapSelected + 1)
     },
     firstPageSelected() {
-      return this.selected === 1
+      return this.wrapSelected === 1
     },
     lastPageSelected() {
-      return (this.selected === this.pageCount) || (this.pageCount === 0)
+      return (this.wrapSelected === this.pageCount) || (this.pageCount === 0)
     },
     selectFirstPage() {
-      if (this.selected <= 1) return
+      if (this.wrapSelected <= 1) return
 
       this.handlePageSelected(1)
     },
     selectLastPage() {
-      if (this.selected >= this.pageCount) return
+      if (this.wrapSelected >= this.pageCount) return
 
       this.handlePageSelected(this.pageCount)
     }
