@@ -84,6 +84,26 @@
         </span>
       </paginate>
     </div>
+
+    <div>
+      <h3>Pagination component array</h3>
+      <paginate
+        v-model="pages"
+        :page-count="20"
+        :margin-pages="2"
+        :page-range="4"
+        :container-class="'pagination'"
+        :page-class="'page-item'"
+        :page-link-class="'page-link-item'"
+        :prev-class="'prev-item'"
+        :prev-link-class="'prev-link-item'"
+        :next-class="'next-item'"
+        :next-link-class="'next-link-item'"
+        :break-view-class="'break-view'"
+        :break-view-link-class="'break-view-link'"
+      >
+      </paginate>
+    </div>
   </div>
 </template>
 
@@ -91,7 +111,8 @@
 export default {
   data() {
     return {
-      page: 1
+      page: 1,
+      pages: [1,2,3,4,5,6,7,8,9,10,11,12,13,14]
     }
   },
 }

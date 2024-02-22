@@ -272,7 +272,7 @@ describe('Paginate', () => {
       expect(lastButton.textContent).to.equal("1")
     })
   })
-  
+
   it('Use custom text', () => {
     const vm = new Component({
       propsData: {
@@ -293,4 +293,5 @@ describe('Paginate', () => {
     expect(breakView.textContent).to.equal('BREAK VIEW TEXT')
   })
 
+  // Todo: write test for array of value
 })

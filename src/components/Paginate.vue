@@ -144,7 +144,7 @@ export default {
         this.innerValue = newValue
       }
     },
-    wrapSelected: () => {
+    wrapSelected: function () {
       return typeof this.selected === "object"
         ? this.selected.pop()
         : this.selected
@@ -156,7 +156,7 @@ export default {
       if (this.pageCount <= this.pageRange) {
         for (let index = 0; index < this.pageCount; index++) {
           const isSelected = typeof this.selected === "object"
-            ? this.selected.includes(index)
+            ? this.selected.includes(index + 1)
             : index === (this.selected - 1)
 
           let page = {
@@ -171,7 +171,7 @@ export default {
 
         let setPageItem = index => {
           const isSelected = typeof this.selected === "object"
-            ? this.selected.includes(index)
+            ? this.selected.includes(index + 1)
             : index === (this.selected - 1)
 
           let page = {
