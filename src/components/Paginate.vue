@@ -146,7 +146,7 @@ export default {
     },
     wrapSelected: function () {
       return typeof this.selected === "object"
-        ? this.selected.pop()
+        ? this.selected.slice(-1).pop()
         : this.selected
     },
 
@@ -155,6 +155,7 @@ export default {
       let items = {}
       if (this.pageCount <= this.pageRange) {
         for (let index = 0; index < this.pageCount; index++) {
+
           const isSelected = typeof this.selected === "object"
             ? this.selected.includes(index + 1)
             : index === (this.selected - 1)
